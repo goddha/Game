@@ -1,38 +1,40 @@
-interface groupItemsConfig {
-  size: {
-    start: number
-    max: number
-  }
-  timer: {
-    start: number
-    repeat: number
-  }
-  key: string
-}
-interface enemyConfig {
-  velocity: {
-    start: number
-    add: number
-    max: number
-  }
-  size: {
-    start: number
-    max: number
-  }
-  timer: {
-    start: number
-    repeat: number
-  }
-  key: string
-  animate: {
-    key: string
-    start: number
-    end: number
-  }
-  customConfig: {
-    bodySize: number
-  }
-}
+import { groupItemsConfig, enemyConfig } from './interfaceType'
+// interface groupItemsConfig {
+//   size: {
+//     start: number
+//     max: number
+//   }
+//   timer: {
+//     start: number
+//     repeat: number
+//   }
+//   key: string
+// }
+// interface enemyConfig {
+//   velocity: {
+//     start: number
+//     add: number
+//     max: number
+//   }
+//   size: {
+//     start: number
+//     max: number
+//   }
+//   timer: {
+//     start: number
+//     repeat: number
+//     increase?: number
+//   }
+//   key: string
+//   animate: {
+//     key: string
+//     start: number
+//     end: number
+//   }
+//   customConfig: {
+//     bodySize: number
+//   }
+// }
 const stageConFig = [
   {
     info: {
@@ -133,10 +135,12 @@ const stageNolimit = {
       size: {
         start: 10,
         max: 15,
+        maxAbsolute: 25,
       },
       timer: {
         start: 2000,
         repeat: 1000,
+        increase: 10000,
       },
       key: 'zombie',
       animate: {
@@ -200,37 +204,3 @@ const stageNolimit = {
 }
 
 export default { stageNolimit, stageConFig }
-
-/*	{	
-	--- info of the stage ---
-		info: {
-			stageNo: 3,
-			bg: 'grass1',
-			startingHp: 100,
-			startingGas: 200,
-			timer:5000 -- timer untill pass the stage --
-		},
-	--- items in the stage ---
-		items: {
-			gas: {
-				maxCount: 4,
-				point: [30, 40], -- stats add points --
-				timer: 500, -- spawn timer --
-			},
-			repairItem: {
-				maxCount: 2,
-				point: [30, 40], -- stats add points --
-				timer: 5000, -- spawn timer --
-			},
-		},
-	--- monsters in the stage ---
-		enemy: {
-			zombies: {
-				maxCount: 15,
-			},
-			skeletons: {
-				maxCount: 5,
-			},
-		},
-	},
-	 */

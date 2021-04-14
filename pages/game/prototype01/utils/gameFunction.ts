@@ -1,44 +1,4 @@
-// interface groupPhysics {
-// 	group: Phaser.Physics.Arcade.Group
-// 	interval: NodeJS.Timeout
-// 	timeOut: NodeJS.Timeout
-// }
-interface groupItemsConfig {
-  size: {
-    start: number
-    max: number
-  }
-  timer: {
-    start: number
-    repeat: number
-  }
-  key: string
-}
-interface enemyConfig {
-  velocity: {
-    start: number
-    add: number
-    max: number
-  }
-  size: {
-    start: number
-    max: number
-  }
-  timer: {
-    start: number
-    repeat: number
-  }
-  key: string
-  animate: {
-    key: string
-    start: number
-    end: number
-  }
-  customConfig: {
-    bodySize: number
-  }
-}
-
+import { groupItemsConfig, enemyConfig } from './interfaceType'
 const carHit = (scene: Phaser.Scene, object: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody) => {
   const bloodSplash = scene.add.sprite(0, 0, 'blood', 'blood-0.png').setScale(Phaser.Math.FloatBetween(0.25, 0.45))
   const minusScore = 10
@@ -129,6 +89,7 @@ const createEnemyGroup = (scene: Phaser.Scene, prop: enemyConfig, actor: Phaser.
   })
   let interval: NodeJS.Timeout
   let timeOut: NodeJS.Timeout
+  let intervalIncress: NodeJS.Timeout
   const betweenX = [150, 850]
   const betweenY = [100, 650]
   for (let i = 0; i < prop.size.start; i++) {
@@ -170,6 +131,12 @@ const createEnemyGroup = (scene: Phaser.Scene, prop: enemyConfig, actor: Phaser.
       child.setVelocity(randomVelocity.x, randomVelocity.y)
     }, prop.timer.repeat)
   }
+  if (prop.timer.increase) {
+    intervalIncress = setInterval(() => {
+      group.maxSize = group.maxSize < prop.size.maxAbsolute ? group.maxSize + 1 : prop.size.maxAbsolute
+      console.log({ maxSize: group.maxSize })
+    }, prop.timer.increase)
+  }
 
   scene.physics.add.overlap(
     actor,
@@ -183,7 +150,7 @@ const createEnemyGroup = (scene: Phaser.Scene, prop: enemyConfig, actor: Phaser.
   group.children.entries.forEach((child, index) => {
     child.setData({ key: index })
   })
-  return { group, interval, timeOut }
+  return { group, interval, timeOut, intervalIncress }
 }
 
 export { animateWithGenerateFrames, carHit, handleGameOver, hudControll, createEnemyGroup, createItemGroup }

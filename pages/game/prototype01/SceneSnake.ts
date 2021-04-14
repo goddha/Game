@@ -1,12 +1,7 @@
 import Phaser from 'phaser'
 import config from './utils/stageConfig'
+import { groupPhysics } from './utils/interfaceType'
 import { animateWithGenerateFrames, carHit, handleGameOver, hudControll, createEnemyGroup, createItemGroup } from './utils/gameFunction'
-
-interface groupPhysics {
-  group: Phaser.Physics.Arcade.Group
-  interval: NodeJS.Timeout
-  timeOut: NodeJS.Timeout
-}
 
 let itemRepair: groupPhysics,
   zombies: groupPhysics,
@@ -176,10 +171,11 @@ export class ScenePlay extends Phaser.Scene {
       textStatus.setText(`GAME OVER\nscore : ${score}\npress space to continue`)
       if (cursors.space.isDown) {
         clearInterval(itemRepair.interval)
-        clearInterval(itemRepair.timeOut)
+        clearTimeout(itemRepair.timeOut)
         clearInterval(itemGasTanks.interval)
-        clearInterval(itemGasTanks.timeOut)
+        clearTimeout(itemGasTanks.timeOut)
         clearInterval(zombies.interval)
+        clearInterval(zombies.intervalIncress)
         clearTimeout(zombies.timeOut)
         // this.scene.restart()
         this.scene.start('logoScene')
